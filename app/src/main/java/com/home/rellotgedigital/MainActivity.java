@@ -13,13 +13,11 @@ import android.graphics.Typeface;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.format.Time;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
@@ -118,14 +116,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onDraw(Canvas canvas){
             super.onDraw(canvas);
-            float width =  canvas.getWidth();
-            float height = canvas.getHeight();
+            float width =  getWidth();
+            float height = getHeight();
             canvas.drawRect(0,0, width, height, mBackgroundPaint);
 
             float centerX = width / 2f;
             float centerY = height / 2f;
 
-            int cur_hour = hours;
+       /*     int cur_hour = hours;
             String cur_ampm = "AM";
             if (cur_hour == 0){
                 cur_hour = 12;
@@ -133,26 +131,26 @@ public class MainActivity extends AppCompatActivity {
             if (cur_hour > 12){
                 cur_hour = cur_hour - 12;
                 cur_ampm = "PM";
-            }
+            }*/
 
             String text = String.format("%02d:%02d", hours, minutes);
 
             String day_of_week = "";
 
             if (weekday == GregorianCalendar.MONDAY) {
-                day_of_week = "LUN";
+                day_of_week = "DL.";
             } else if (weekday == GregorianCalendar.TUESDAY) {
-                day_of_week = "MAR";
+                day_of_week = "DM.";
             } else if (weekday == GregorianCalendar.WEDNESDAY) {
-                day_of_week = "MIE";
+                day_of_week = "DC.";
             } else if (weekday == GregorianCalendar.THURSDAY) {
-                day_of_week = "JUE";
+                day_of_week = "DJ.";
             } else if (weekday == GregorianCalendar.FRIDAY) {
-                day_of_week = "VIE";
+                day_of_week = "DV.";
             } else if (weekday == GregorianCalendar.SATURDAY) {
-                day_of_week = "SAB";
+                day_of_week = "DS.";
             } else if (weekday == GregorianCalendar.SUNDAY) {
-                day_of_week = "DOM";
+                day_of_week = "DG.";
             }
 
             String text2 = String.format("%s %02d-%02d-%d", day_of_week, day, month, year);
