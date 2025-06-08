@@ -7,9 +7,14 @@
     android:keepScreenOn="true"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!--
+      Asegúrate de que el paquete 'com.home.rellotgedigital' coincida con la estructura de tu proyecto.
+      He cambiado el TextView por tu DrawingView personalizada.
+    -->
+    <com.home.rellotgedigital.DrawingView
+        android:id="@+id/clockView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
