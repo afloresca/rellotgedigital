@@ -1,6 +1,7 @@
 package com.home.rellotgedigital
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
@@ -13,12 +14,12 @@ class DrawingView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
+
 ) : View(context, attrs, defStyleAttr) {
 
     private var time: Calendar? = null
     private val timePaint = Paint()
     private val datePaint = Paint()
-    private var isPortrait = true
 
     init {
         setupPaints()
@@ -40,15 +41,18 @@ class DrawingView @JvmOverloads constructor(
         }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+
+        super.onConfigurationChanged(newConfig)
+    }
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         updateTextSizes(w, h)
     }
 
-    private fun updateTextSizes(width: Int, height: Int) {
+    fun updateTextSizes(width: Int, height: Int) {
         val screenMin = min(width, height) // Use the smaller dimension as reference
 
-        // Time text = 10% of screen height (or 15% in landscape)
         timePaint.textSize = screenMin * if (width > height) 0.70f else 0.40f
 
         // Date text = 40% of time text size

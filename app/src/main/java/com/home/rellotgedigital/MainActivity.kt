@@ -1,6 +1,13 @@
 package com.home.rellotgedigital
 
+import android.R.attr.height
+import android.R.attr.width
 import android.os.Bundle
+import android.content.Context
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
+import android.provider.Settings
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -13,14 +20,36 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: ClockViewModel by viewModels()
 
+    fun Context.isAutoRotationEnabled(): Boolean {
+        return Settings.System.getInt(
+            contentResolver,
+            Settings.System.ACCELEROMETER_ROTATION, 0
+        ) == 1
+    }
+
+    private fun handleScreenOrientation() {
+        requestedOrientation = when {
+            !isAutoRotationEnabled() -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            else -> ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        handleScreenOrientation()
         setupFullscreen()
         setupBinding()
         observeTime()
 
+        requestedOrientation = if (!isAutoRotationEnabled()) {
+            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+        }
+
         viewModel.startClock(TimeZone.getDefault())
     }
+    
 
     private fun setupFullscreen() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -38,7 +67,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeTime() {
         viewModel.currentTime.observe(this) { time ->
-            // Ahora 'binding.clockView' es tu DrawingView, por lo que esta llamada es correcta.
             binding.clockView.updateTime(time)
         }
     }
